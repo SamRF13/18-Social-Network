@@ -1,9 +1,8 @@
-const userSchema = new Schema (
+const { Schema, model } = require('mongoose');
+
+
+const thoughtSchema = new Schema (
     {
-    username: {
-        type: String,
-        required: true,
-    },
     thoughtText: {
         type: String,
         required: true,
@@ -13,11 +12,35 @@ const userSchema = new Schema (
     createdAt: {
         type: Date, 
         default: Date.now,
-        get: (createdAtVal) => moment(createdAtVal).format
+        get: (time) // =>  {find date format, preferrably from other file}
+
     },
-    reactions: {
 
+    username: {
+        type: String,
+        required: true,
+    },
+reactions: [reactionsSchema],
+},
 
-    }
-    }
-})
+// json
+{
+    // Mongoose supports two Schema options to transform Objects after querying MongoDb: toJSON and toObject.
+    // Here we are indicating that we want virtuals to be included with our response, overriding the default behavior
+    toJSON: {
+      getters: true,
+    },
+    id: false,
+  },
+
+)
+
+thoughtSchema
+  .virtual('reactionCount')
+  // Getter
+  .get(function () {
+    return this.reactions.length;
+  })
+
+const Thought = model('Thought', thoughtSchema);
+module.exports = Thought;
