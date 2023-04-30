@@ -3,6 +3,8 @@ const {
   getUsers,
   getSingleUser,
   createUser,
+  updateUser,
+  deleteUser,
   addFriend,
   deleteFriend,
 } = require('../../controllers/userController');
@@ -20,9 +22,9 @@ router.route('/').post(CreateUser); //i dont know,
   "email": "lernantino@gmail.com"
 }*/
 
-router.route('/').put(). //update user by his id
+router.route('/').put(editUser). //update user by his id
 
-router.route('/').delete() //remove user by his id
+router.route('/').delete(updateUser) //remove user by his id
 
 
 

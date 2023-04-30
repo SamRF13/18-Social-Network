@@ -1,6 +1,23 @@
+const router = require('express').Router();
+const {
+  getThought,
+  getSingleThought,
+  createThought,
+  updateThought,
+  deleteThought,
+} = require('../../controllers/thoughtController');
 
+router.route('/').get(getThought).post(createThought);
 
+router.route('/:userId').get(getSingleThought); //get by its id popoulated thought and friend data.
 
+router.route('/').post(CreateThought); // (don't forget to push the created thought's `_id` to the associated user's `thoughts` array field)
+
+router.route('/').put(updateThought);
+
+router.route('/').delete(deleteThought);
+
+module.exports = router;
 /*
 
 **`/api/thoughts`**

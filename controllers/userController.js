@@ -32,20 +32,33 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  async editUser(req, res) {
+  async updateUser(req, res) {
     const dbUserData = await User.findOneAndUpdate(req.body);
         // Uses findOneAndUpdate() method on model
         const result = await Genre
         .findOneAndUpdate(
-          // Finds first document with name of "Kids"
           { _id: req.params.userId },
-          // Replaces name with value in URL param
           { $set: req.body },
-          // Sets to true so updated document is returned; Otherwise original document will be returned
           { new: true }
         );
   },
   async deleteUser(req, res) {
+    const dbUserData = await User.findOneAndDelete(req.body);
+    // Uses findOneAndDelete() method on model
+    const result = await Genre
+    .findOneAndDelete(
+      { _id: req.params.userId },
+      { $set: req.body },
+      { new: true }
+    )
+
+  },
+  async addFriend(req, res){
+
+
+  },
+  async deleteFriend(req, res){
+
 
   },
 };
