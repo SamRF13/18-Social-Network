@@ -1,3 +1,5 @@
+const { Schema,} = require('mongoose');
+
 const reactionSchema = new Schema (
 
     {
@@ -18,7 +20,7 @@ const reactionSchema = new Schema (
         createdAt: {
             type: Date, 
             default: Date.now,
-            get: (time) // =>  {find date format, preferrably from other file}
+//            get: (time) // =>  {find date format, preferrably from other file}
         },
 
     

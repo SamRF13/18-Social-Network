@@ -1,5 +1,4 @@
 const {Schema, model} = require('mongoose')
-module.import = thoughts
 
 
 const userSchema = new Schema (
