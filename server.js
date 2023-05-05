@@ -1,5 +1,7 @@
 const express = require('express');
-const mongoose = require('mongoose');
+
+const DB = require('./config/connection');
+
 const routes = require('./routes');
 
 const app = express();
@@ -10,6 +12,11 @@ app.use(express.json());
 
 app.use(routes);
 
-app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
+DB.once('open', ()=>{
+
+    app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
+
+});
+
 
 
