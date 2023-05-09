@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../models/user');
 
 const userController = {
   async getUsers(req, res) {
@@ -54,27 +54,18 @@ const userController = {
   },
   async updateUser(req, res) {
     const dbUserData = await User.findOneAndUpdate(req.body);
-        // Uses findOneAndUpdate() method on model
-        const result = await Genre
-        .findOneAndUpdate(
-          { _id: req.params.userId },
-          { $set: req.body },
-          { new: true }
-        );
+    return dbUserData
+
+
   },
   async deleteUser(req, res) {
     const dbUserData = await User.findOneAndDelete(req.body);
-    // Uses findOneAndDelete() method on model
-    const result = await Genre
-    .findOneAndDelete(
-      { _id: req.params.userId },
-      { $set: req.body },
-      { new: true }
-    )
-
+    return dbUserData
   },
-  async addFriend(req, res){
 
+  async addFriend(req, res){
+    const dbUserData = await User.create (req.body);
+  res.json(dbUserData);
 
   },
   async deleteFriend(req, res){

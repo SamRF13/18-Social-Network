@@ -10,10 +10,14 @@ const {
 } = require('../../controllers/userController');
 
 // /api/users
-router.route('/').get(getUsers).post(createUser);
+router.route('/createUser/').get(getUsers).post(createUser);
 
-router.route('/:userId').get(getSingleUser); //get by its id popoulated thought and friend data.
+router.route('/:userId').get(getSingleUser).put(updateUser).delete(deleteUser);
 
+router.route(':userId/friend/:friendId').post(addFriend).delete(deleteFriend);
+
+
+//Friends routes missing.
 
 // router.route('/').post(CreateUser).; //i dont know, 
 

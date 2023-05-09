@@ -44,5 +44,6 @@ userSchema
   })
 
         
-const User = model('User', userSchema);
+const User = model('user', userSchema);
+
 module.exports = User;

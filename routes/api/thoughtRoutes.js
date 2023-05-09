@@ -7,15 +7,15 @@ const {
   deleteThought,
 } = require('../../controllers/thoughtController');
 
-router.route('/').get(getThought).post(createThought);
+router.route('/createThought').get(getThought).post(createThought);
 
-router.route('/:userId').get(getSingleThought); //get by its id popoulated thought and friend data.
+router.route('/thoughtID').get(getSingleThought); //get by its id popoulated thought and friend data.
 
 router.route('/').post(createThought); // (don't forget to push the created thought's `_id` to the associated user's `thoughts` array field)
 
-router.route('/').put(updateThought);
+router.route('/updateThought').put(updateThought);
 
-router.route('/').delete(deleteThought);
+router.route('/deleteThought').delete(deleteThought);
 
 module.exports = router;
 /*
