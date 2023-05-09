@@ -2,7 +2,7 @@ const { Thought, User } = require('../models');
 
 
 const thoughtController = {
-    async getThought(req, res) {
+    async getThoughts(req, res) {
       try {
         const users = await Thought.find();
         res.json(users);
@@ -51,8 +51,14 @@ const thoughtController = {
             { new: true }
         ) (req.body);
     },
+    async createReaction(req, res) {
+      const dbUserData = await reactionSchema.findOneAndDelete(
+
+      )
+    }
+
   };
   
-
+// still need to do reactions.
 
 module.exports = thoughtController
