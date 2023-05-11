@@ -34,10 +34,8 @@ const thoughtController = {
       }
     },
     async updateThought(req, res) {
-      const dbUserData = await Thought.findOneAndUpdate(req.body);
-          // Uses findOneAndUpdate() method on model
-          const result = await Genre
-          .findOneAndUpdate(
+      // Uses findOneAndUpdate() method on model
+          const dbUserData = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $set: req.body },
             // Sets to true so updated document is returned; Otherwise original document will be returned
@@ -55,8 +53,13 @@ const thoughtController = {
       const dbUserData = await reactionSchema.findOneAndDelete(
 
       )
-    }
+    },
 
+    async deleteReaction(req, res){
+      const dbUserData = await reactionSchema.findOneAndDelete(
+
+      )
+    },
   };
   
 // still need to do reactions.
