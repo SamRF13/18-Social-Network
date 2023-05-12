@@ -27,9 +27,19 @@ const thoughtController = {
     // create a new thought
     async createThought(req, res) {
       try {
-        const dbUserData = await Thought.create(req.body);
-        res.json(dbUserData);
+        const dbThoughtData = await Thought.create(req.body);
+        const dbUserData = await User.findOneAndUpdate(
+          { _id: req.body.userId },
+          {$push: {thoughts: dbThoughtData._id}},
+          // Sets to true so updated document is returned; Otherwise original document will be returned
+          { new: true })
+          if(!dbUserData) {
+            return req.status(404).json({message: "user not found"});
+          }
+        return dbThoughtData;
       } catch (err) {
+
+        console.log(err)
         res.status(500).json(err);
       }
     },
@@ -41,6 +51,7 @@ const thoughtController = {
             // Sets to true so updated document is returned; Otherwise original document will be returned
             { new: true }
           );
+          return dbUserData
     },
     async deleteThought(req, res) {
         const dbUserData = await Thought.findOneAndDelete(
@@ -48,17 +59,34 @@ const thoughtController = {
             { $set: req.body },
             { new: true }
         ) (req.body);
+        if (!dbUserData) {
+          return res.status(404).json({ message: 'No thought with that ID' });
+        }
+        return dbUserData
+        
     },
     async createReaction(req, res) {
-      const dbUserData = await reactionSchema.findOneAndDelete(
-
-      )
+      const dbUserData = await reactionSchema.findOneAndUpdate(
+          { _id: req.params.thoughtId },
+          { $addToSet: {reactions: req.body}},
+          { new: true }
+        );
+        if (!dbUserData) {
+          return res.status(404).json({ message: 'Reaction not created' });
+        }
+        return dbUserData
     },
 
     async deleteReaction(req, res){
-      const dbUserData = await reactionSchema.findOneAndDelete(
-
-      )
+        const dbUserData = await reactionSchema.findOneAndUpdate(
+          { _id: req.params.thoughtId },
+          { $pull: {reactions: {reactionId:req.params.reactionId}}},
+          { new: true }
+        );
+        if (!dbUserData) {
+          return res.status(404).json({ message: 'No reaction with that ID' });
+        }
+        return dbUserData
     },
   };
   

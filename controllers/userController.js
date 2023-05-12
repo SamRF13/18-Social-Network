@@ -1,4 +1,4 @@
-const { user } = require('../models');
+const { User } = require('../models');
 const User = require('../models/user');
 
 const userController = {
@@ -71,7 +71,7 @@ const userController = {
 
   },
   async deleteFriend(req, res){
-    const dbUserData = await user.findOneAndDelete(req.body);
+    const dbUserData = await User.findOneAndDelete(req.body);
     return dbUserData 
 
   },
