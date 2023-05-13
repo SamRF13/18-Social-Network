@@ -1,5 +1,5 @@
 const { User } = require('../models');
-const User = require('../models/user');
+
 
 const userController = {
   async getUsers(req, res) {
@@ -14,7 +14,8 @@ const userController = {
     try {
       const user = await User.findOne({ _id: req.params.userId })
         .select('-__v')
-        .populate('posts');
+        .populate('thoughts')
+        .populate('friends');
 
       if (!user) {
         return res.status(404).json({ message: 'No user with that ID' });
@@ -22,6 +23,7 @@ const userController = {
 
       res.json(user);
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
     /* populate example, idk if it will work
@@ -55,13 +57,12 @@ const userController = {
   },
   async updateUser(req, res) {
     const dbUserData = await User.findOneAndUpdate(req.body);
-    return dbUserData
-
+    res.json (dbUserData);
 
   },
   async deleteUser(req, res) {
     const dbUserData = await User.findOneAndDelete(req.body);
-    return dbUserData;
+    res.json (dbUserData);
     
   },
 
@@ -72,7 +73,7 @@ const userController = {
   },
   async deleteFriend(req, res){
     const dbUserData = await User.findOneAndDelete(req.body);
-    return dbUserData 
+    res.json (dbUserData);
 
   },
 };

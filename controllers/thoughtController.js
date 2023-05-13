@@ -12,15 +12,16 @@ const thoughtController = {
     },
     async getSingleThought(req, res) {
       try {
-        const Thought = await Thought.findOne({ _id: req.params.userId })
+        const thought = await Thought.findOne({ _id: req.params.userId })
           .select('-__v');
   
-        if (!Thought) {
+        if (!thought) {
           return res.status(404).json({ message: 'No thought with that ID' });
         }
   
-        res.json(user);
+        res.json(thought);
       } catch (err) {
+        console.log(err);
         res.status(500).json(err);
       }
     },
@@ -34,14 +35,16 @@ const thoughtController = {
           // Sets to true so updated document is returned; Otherwise original document will be returned
           { new: true })
           if(!dbUserData) {
-            return req.status(404).json({message: "user not found"});
+            return res.status(404).json({message: "user not found"});
           }
-        return dbThoughtData;
+
+          res.json (dbThoughtData);
       } catch (err) {
 
         console.log(err)
         res.status(500).json(err);
       }
+
     },
     async updateThought(req, res) {
       // Uses findOneAndUpdate() method on model
@@ -51,18 +54,18 @@ const thoughtController = {
             // Sets to true so updated document is returned; Otherwise original document will be returned
             { new: true }
           );
-          return dbUserData
+          res.json (dbUserData);
     },
     async deleteThought(req, res) {
         const dbUserData = await Thought.findOneAndDelete(
             { _id: req.params.thoughtId },
             { $set: req.body },
             { new: true }
-        ) (req.body);
+        );
         if (!dbUserData) {
           return res.status(404).json({ message: 'No thought with that ID' });
         }
-        return dbUserData
+        res.json (dbUserData);
         
     },
     async createReaction(req, res) {
@@ -74,7 +77,7 @@ const thoughtController = {
         if (!dbUserData) {
           return res.status(404).json({ message: 'Reaction not created' });
         }
-        return dbUserData
+        res.json (dbUserData);
     },
 
     async deleteReaction(req, res){
@@ -86,7 +89,7 @@ const thoughtController = {
         if (!dbUserData) {
           return res.status(404).json({ message: 'No reaction with that ID' });
         }
-        return dbUserData
+        res.json (dbUserData);
     },
   };
   
