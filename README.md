@@ -4,3 +4,7 @@ We can check the functionality of our routes using Insomnia.
 This is just the back end work, we still need to make the front end to be able to open our web page to the public.
 
 https://github.com/SamRF13/18-Social-Network
+
+Here's a link demostrating the functionality of the application.
+
+https://drive.google.com/file/d/1gNR3LsucPaRL3DDXxDWNkRXwV5KAOlMR/view?usp=sharing
