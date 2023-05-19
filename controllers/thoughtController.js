@@ -12,7 +12,7 @@ const thoughtController = {
     },
     async getSingleThought(req, res) {
       try {
-        const thought = await Thought.findOne({ _id: req.params.userId })
+        const thought = await Thought.findOne({ _id: req.params.thoughtId })
           .select('-__v');
   
         if (!thought) {
@@ -69,7 +69,7 @@ const thoughtController = {
         
     },
     async createReaction(req, res) {
-      const dbUserData = await reactionSchema.findOneAndUpdate(
+      const dbUserData = await Thought.findOneAndUpdate(
           { _id: req.params.thoughtId },
           { $addToSet: {reactions: req.body}},
           { new: true }
@@ -81,7 +81,7 @@ const thoughtController = {
     },
 
     async deleteReaction(req, res){
-        const dbUserData = await reactionSchema.findOneAndUpdate(
+        const dbUserData = await Thought.findOneAndDelete(
           { _id: req.params.thoughtId },
           { $pull: {reactions: {reactionId:req.params.reactionId}}},
           { new: true }

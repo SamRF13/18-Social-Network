@@ -66,15 +66,25 @@ const userController = {
     
   },
 
+
+
   async addFriend(req, res){
-    const dbUserData = await User.create (req.body);
-  res.json(dbUserData);
-
-  },
-  async deleteFriend(req, res){
-    const dbUserData = await User.findOneAndDelete(req.body);
+    const dbUserData = await User.findOneAndUpdate(
+      { _id: req.params.userId },
+      { $addToSet: {friends: req.params.friendId}},
+      { new: true }
+    );
+    
     res.json (dbUserData);
-
+  },
+  
+  async deleteFriend(req, res){
+    const dbUserData = await User.findOneAndUpdate(
+      { _id: req.params.userId }, 
+      { $pull: {friends: req.params.friendId}},
+      { new: true }
+  )
+  res.json (dbUserData);
   },
 };
 
